@@ -50,7 +50,7 @@ const CreateJob = () => {
         <FormController id="job-priority">
           <Label>Job Priority</Label>
           <FormSelect value={priority} onChange={priorityChanged}>
-            <option value={"urgent"}>Urgent</option>
+            <option value="urgent">Urgent</option>
             <option value="trival">Trival</option>
             <option value="regular">Regular</option>
           </FormSelect>
