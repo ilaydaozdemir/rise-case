@@ -1,24 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+
+import { AppContext, initialJobs } from "./context";
+import CreateJob from "./components/CreateJob";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import JobList from "./components/JobList";
 
 function App() {
+  const [jobs, setJobs] = useState(initialJobs);
+
+  const dispatcher = ({ type, payload }) => {
+    switch (type) {
+      case "ADD_JOB":
+        setJobs([...jobs, payload]);
+        break;
+      case "DELETE_JOB":
+        const newJobs = [...jobs];
+        newJobs.splice(payload, 1);
+        setJobs(newJobs);
+        break;
+      default:
+        break;
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppContext.Provider value={{ jobs, dispatcher }}>
+      <div className="App">
+        <Header />
+        <CreateJob />
+        <JobList />
+        <Footer />
+      </div>
+    </AppContext.Provider>
   );
 }
 
